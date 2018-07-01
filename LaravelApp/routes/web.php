@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,104 +17,125 @@ Route::get('/', function () {
 
 Route::get('/login', function () {
     return view('login');
-});
+}) ->name('login');
 
 
 
 Route::get('/register', function () {
     return view('register');
-});
+}) ->name('register');
 
 Route::get('/home',[
-    'uses' => 'PostController@getDashboard',
+    'uses' => 'PostController@Dashboard',
     'as'=> 'home',
-    'middleware'=> 'guest'
+    'middleware'=> 'auth'
 ]);
 
 Route::post('/signup',[
-    'uses' => 'UserController@postSignUp',
+    'uses' => 'UserController@SignUp',
     'as'=> 'signup'
 ]);
 
 Route::post('/signin',[
-    'uses' => 'UserController@postSignIn',
+    'uses' => 'UserController@SignIn',
     'as'=> 'signin'
 ]);
 
 Route::get('/logout',[
-    'uses'=>'UserController@getLogout',
+    'uses'=>'UserController@Logout',
     'as'=>'logout'
 ]);
 
 Route::post('/createpost',[
-    'uses' => 'PostController@postCreatePost',
+    'uses' => 'PostController@CreatePost',
     'as' => 'post.create',
-    'middleware'=> 'guest'
+    'middleware'=> 'auth'
 ]);
 
 Route::get('/delete-post/{post_id}',[
-    'uses' => 'PostController@getDeletePost',
+    'uses' => 'PostController@DeletePost',
     'as'=>'post.delete',
-    'middleware'=> 'guest'
+    'middleware'=> 'auth'
 ]);
 
 
 Route::post('/edit',[
-    'uses' => 'PostController@postEditPost',
-    'as' => 'edit'
+    'uses' => 'PostController@EditPost',
+    'as' => 'edit',
+    'middleware'=> 'auth'
 ]);
 
 Route::get('/account',[
-    'uses' => 'UserController@getAccount',
-    'as' =>'account'
+    'uses' => 'UserController@Account',
+    'as' =>'account',
+    'middleware'=> 'auth'    
 ]);
 
 Route::post('/updateaccount',[
-    'uses'=>'UserController@postSaveAccount',
-    'as'=>'account.save'
+    'uses'=>'UserController@SaveAccount',
+    'as'=>'account.save',
+    'middleware'=> 'auth'    
 ]);
 
 Route::get('/userimage/{filename}',[
-    'uses'=>'UserController@getUserImage',
-    'as'=>'account.image'
+    'uses'=>'UserController@UserImage',
+    'as'=>'account.image',
+    'middleware'=> 'auth'    
 ]);
 
 Route::post('/like',[
-    'uses'=>'PostController@postLikePost',
-    'as'=>'like'
+    'uses'=>'PostController@LikePost',
+    'as'=>'like',
+    'middleware'=> 'auth'    
 ]);
 
 Route::get('/fertility_tool',[
     'uses'=>'ToolController@getFertilityTool',
     'as'=>'fertility_tool',
-    'middleware'=> 'guest'
+    'middleware'=> 'auth'
 
 ]);
 
 Route::post('/result',[
-    'uses'=>'ToolController@postResult',
-    'as'=>'result'
+    'uses'=>'ToolController@SaveResult',
+    'as'=>'result',
+    'middleware'=> 'auth'    
 ]);
 
 Route::post('/publishResult',[
-    'uses' => 'ToolController@publishResult',
-    'as'=> 'publishResult'
+    'uses' => 'ToolController@PublishResult',
+    'as'=> 'publishResult',
+    'middleware'=> 'auth'    
 ]);
 
 Route::post('/contact',[
-    'uses' => 'UserController@contact',
+    'uses' => 'UserController@Contact',
     'as'=> 'contact'
 ]);
 
 Route::get('/stats',[
-    'uses'=>'ToolController@getStats',
+    'uses'=>'ToolController@Stats',
     'as'=>'stats',
-    'middleware'=> 'guest'
-
+    'middleware'=> 'auth'
 ]);
 
 Route::post('/Chart',[
     'uses'=>'ToolController@getChart',
-    'as'=>'getChart'
+    'as'=>'getChart',
+    'middleware'=> 'auth'    
 ]);
 
+Route::group(['prefix' => 'api/{user_api_key}'], function() {
+    Route::get('results', ['uses' => 'NoteController@Results']);
+	Route::get('results/normal', ['uses' => 'NoteController@NormalResults']);
+	Route::get('results/altered', ['uses' => 'NoteController@AlteredResults']);
+});
+
+//API FOR MY ACC:  tICL0ypTCyLAsXBnx3M6nQBwDnyGIT6hSVf6QjTR9FieqM6CoZlunThnPfLw
+
+Route::get('/documentation',[
+    'uses'=>'UserController@Documentation',
+    'as'=>'documentation',
+    'middleware'=> 'auth'
+
+]);

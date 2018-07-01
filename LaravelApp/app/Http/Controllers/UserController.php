@@ -1,21 +1,21 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
+
 class UserController extends Controller
 {
     
-    
-    
-    public function postSignUp(Request $request)
+    public function SignUp(Request $request)
     {
         $this ->validate($request, [
             'email' => 'email|unique:users',
-            'first_name' => 'required|max:30',
+            'first_name' => 'required|max:30|unique:users',
             'password'=>'required|min:8'
         ]);
         
@@ -25,6 +25,7 @@ class UserController extends Controller
         
         $user=new User();
         $user->email = $email;
+        $user->api_token=str_random(60);
         $user->first_name=$first_name;
         $user->password=$password;
         $user->save();
@@ -32,32 +33,33 @@ class UserController extends Controller
         return redirect()->route('home');
     }
     
-    public function postSignIn(Request $request)
+    public function SignIn(Request $request)
     {
          $this ->validate($request, [
             'email' => 'email',
             'password'=>'required|min:8'
-        ]);
+         ]);
          
-        if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']])){
+        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']], $request['rembember'])) {
             return redirect()->route('home');
         }
         return redirect()->back();
-        }
+    }
     
-    public function getLogout(){
+    public function Logout()
+    {
         Auth::logout();
         return redirect()->route('welcome');
     }
     
-    public function getAccount()
+    public function Account()
     {
-        return view('account',['user'=>Auth::user()]);
+        return view('account', ['user'=>Auth::user()]);
     }
     
-    public function postSaveAccount(Request $request)
+    public function SaveAccount(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'first_name' => 'required|max:30'
         ]);
         
@@ -66,13 +68,14 @@ class UserController extends Controller
         $user -> update();
         $file =$request->file('image');
         $filename=$request['first_name']. '-' .$user->id . '.jpg';
-        if($file){
-            Storage::disk('local')->put($filename,File::get($file));
+        if ($file) {
+            Storage::disk('local')->put($filename, File::get($file));
         }
         return redirect() -> route('home');
     }
     
-    public function contact(Request $request){
+    public function Contact(Request $request)
+    {
         $this ->validate($request, [
             'email' => 'email',
             'name' => 'required|max:30',
@@ -84,25 +87,27 @@ class UserController extends Controller
         $name=$request['name'];
         $phone= $request['phone'];
         $message=$request['message'];
-        $headers =  'MIME-Version: 1.0' . "\r\n"; 
+        $headers =  'MIME-Version: 1.0' . "\r\n";
         $headers .= 'From: Your name '.$email. "\r\n";
-        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n"; 
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $contact_message='There was an error while saving your e-mail.';
-        ini_set("SMTP","ssl://smtp.gmail.com");
-        ini_set("smtp_port","465");
-        if(mail ("dudjakmario2014@gmail.com", $name.$phone, $message, "From: $name <$email>" . "\\r\
-        " . "Reply-To: $name <$email>"))   {
-        $contact_message='E-mail successfuly sent!';
+        ini_set("SMTP", "ssl://smtp.gmail.com");
+        ini_set("smtp_port", "465");
+        if (mail ("dudjakmario2014@gmail.com", $name.$phone, $message, "From: $name <$email>" . "\\r\
+        " . "Reply-To: $name <$email>")) {
+            $contact_message='E-mail successfuly sent!';
         }
         return redirect()->route('welcome')->with(['contactMessage'=>$contact_message]);
     }
     
-    public function getUserImage($filename)
+    public function UserImage($filename)
     {
         $file = Storage::disk('local') -> get($filename);
-        return new Response($file,200);
+        return new Response($file, 200);
+    }
+    
+    public function Documentation()
+    {
+        return view('documentation', ['user' => Auth::user()]);
     }
 }
-
-
-

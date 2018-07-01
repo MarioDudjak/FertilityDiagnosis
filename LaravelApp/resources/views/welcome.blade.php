@@ -11,26 +11,19 @@
 
     <title>Welcome page</title>
 
-    
-    
-            <link rel="shortcut icon" href="{{asset("assets/ico/icon.png")}}">
 
-   <!-- jQuery -->
-   
+
+    <link rel="shortcut icon" href="{{asset("assets/ico/icon.png ")}}">
+
+    <!-- jQuery -->
+
 </head>
 
 <body id="page-top" class="index">
 
-     @if(!(Auth::user()))
-        @include('includes.header')
-        @endif
-        @if(Auth::user())
-        
-        @include('includes.loggedheader')
-       
-        @endif
+    @if(!(Auth::user())) @include('includes.header') @endif @if(Auth::user()) @include('includes.loggedheader') @endif
 
-    
+
 
 
     <!-- Clients Aside -->
@@ -41,7 +34,7 @@
                     <a href="#">
                     </a>
                 </div>
-                
+
             </div>
         </div>
     </aside>
@@ -83,7 +76,7 @@
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>
                                 <button type="submit" class="btn btn-xl">Send Message</button>
-                               <input type="hidden" name="_token" value="{{ Session::token() }}">
+                                <input type="hidden" name="_token" value="{{ Session::token() }}">
                             </div>
                         </div>
                     </form>
@@ -101,19 +94,27 @@
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline social-buttons">
-                        <li><a href="https://github.com/MarioDudjak"><i class="fa fa-github"></i></a>
+                        <li>
+                            <a href="https://github.com/MarioDudjak">
+                                <i class="fa fa-github"></i>
+                            </a>
                         </li>
-                        <li><a href="https://www.facebook.com/mario.dudjak.1"><i class="fa fa-facebook"></i></a>
+                        <li>
+                            <a href="https://www.facebook.com/mario.dudjak.1">
+                                <i class="fa fa-facebook"></i>
+                            </a>
                         </li>
-                        <li><a href="https://www.linkedin.com/in/mario-dudjak-16b958121/"><i class="fa fa-linkedin"></i></a>
+                        <li>
+                            <a href="https://www.linkedin.com/in/mario-dudjak-16b958121/">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline quicklinks">
-                        <li><a href="https://www.ferit.unios.hr/">FERITOS</a>
-                        </li>
-                        <li><a href="https://www.ferit.unios.hr/studiji/sveucilisni-diplomski-studij/DRCD2-04/38#anc">Kolegij Računarstvo usluga i analiza podataka</a>
+                        <li>
+                            <a href="https://www.ferit.unios.hr/">FERITOS</a>
                         </li>
                     </ul>
                 </div>
@@ -121,31 +122,33 @@
         </div>
     </footer>
 
-    
+
     </div>
 
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script> 
-      <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> 
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/2.2.1/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>﻿
-   
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/2.2.1/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+
     <!-- Bootstrap Core JavaScript -->
 
     <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" integrity="sha384-mE6eXfrb8jxl0rzJDBRanYqgBxtJ6Unn4/1F7q4xRRyIw7Vdg9jP4ycT7x1iVsgb" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" integrity="sha384-mE6eXfrb8jxl0rzJDBRanYqgBxtJ6Unn4/1F7q4xRRyIw7Vdg9jP4ycT7x1iVsgb"
+        crossorigin="anonymous"></script>
 
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ asset("assets/vendor/bootstrap/css/bootstrap.css") }}" rel="stylesheet">
+    <link href="{{ asset("assets/vendor/bootstrap/css/bootstrap.css ") }}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="{{ asset("assets/vendor/font-awesome/css/font-awesome.css") }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset("assets/vendor/font-awesome/css/font-awesome.css ") }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
     <!-- Theme CSS -->
-    <link href="{{ asset("assets/css/agency.css") }}" rel="stylesheet">
+    <link href="{{ asset("assets/css/agency.css ") }}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
